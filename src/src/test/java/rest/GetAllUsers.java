@@ -15,7 +15,7 @@ public class GetAllUsers {
 public void getAllUsersWithoutFilterTest(){
     //Get response  with user ids
     Response response = RestAssured.get("http://localhost:8080/users");
-    response.print();
+    response.prettyPrint();
 
     //Verify response 200
     Assert.assertEquals(response.getStatusCode(),200,"Status code should be 200 but it is not");
