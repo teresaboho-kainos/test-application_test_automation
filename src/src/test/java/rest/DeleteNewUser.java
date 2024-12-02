@@ -8,12 +8,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class PostNewUser {
+public class DeleteNewUser {
     @Test
-    public void postNewUser() {
+    public void deletedUserNotFound() {
         // Create JSON body
         JSONObject body = new JSONObject();
-        body.put("name", "Karolina");
+        body.put("name", "Karolina222");
         body.put("surname", "Testowa");
         body.put("email", "testowa@gmail.com");
         body.put("position", "Test_Engineer");
@@ -22,7 +22,7 @@ public class PostNewUser {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(body.toString())
-                .post("http://localhost:8080/users ");
+                .post("http://localhost:8080/users");
         responsePost.prettyPrint();
 
         //Verify responsePost 200
@@ -37,7 +37,7 @@ public class PostNewUser {
         //Verify specific user id
         SoftAssert softAssert = new SoftAssert();
         String actualName = responseGet.jsonPath().getString("name");
-        softAssert.assertEquals(actualName,"Karolina","name in responsePost is not correct");
+        softAssert.assertEquals(actualName,"Karolina222","name in responsePost is not correct");
 
         String actualSurName = responseGet.jsonPath().getString("surname");
         softAssert.assertEquals(actualSurName,"Testowa","surname in responsePost is not correct");
@@ -50,6 +50,20 @@ public class PostNewUser {
 
         softAssert.assertAll();
 
+
+        Response responseDelete = RestAssured
+                .given()
+                .delete("http://localhost:8080/users/"+ userId);
+
+        responseDelete.prettyPrint();
+
+        Assert.assertEquals(responseDelete.getStatusCode(),202,"Status code should be 200 but it is not");
+
+        Response responseGetAfterDelete = RestAssured
+                .given()
+                .get("http://localhost:8080/users/"+ userId);
+
+        Assert.assertEquals(responseGetAfterDelete.getStatusCode(),404,"Status code should be 404 but it is not");
 
     }
 }
