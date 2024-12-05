@@ -1,6 +1,7 @@
 package rest;
 
 import io.restassured.response.Response;
+import model.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -12,7 +13,10 @@ public class GetOneUserIdTest {
 
     @BeforeTest
     public void addUser() {
-        Response postResponse = UsersService.createUser();
+        User newUser = new User("Karolina222","Testowa","testowa@gmail.com","Test_Engineer");
+
+        Response postResponse = UsersService.createUser(newUser);
+
 
         userId = postResponse.jsonPath().getInt("id");
     }

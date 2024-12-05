@@ -1,18 +1,20 @@
 package rest;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.json.JSONObject;
+import model.User;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class DeleteNewUserTest {
     @Test
     public void deletedUserNotFound() {
 
-        Response postResponse = UsersService.createUser();
+        User newUser = new User("Karolina222","Testowa","testowa@gmail.com","Test_Engineer");
+
+
+        Response postResponse = UsersService.createUser(newUser);
+
 
         //Verify responsePost 200
         Assert.assertEquals(postResponse.getStatusCode(),202,"Status code should be 200 but it is not");

@@ -4,11 +4,15 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import model.User;
 
 public class CreateNewUserTest {
     @Test
     public void postNewUser() {
-        Response postResponse = UsersService.createUser();
+
+        User newUser = new User("Karolina222","Testowa","testowa@gmail.com","Test_Engineer");
+
+        Response postResponse = UsersService.createUser(newUser);
         //Verify responsePost 200
         Assert.assertEquals(postResponse.getStatusCode(),202,"Status code should be 200 but it is not");
 
